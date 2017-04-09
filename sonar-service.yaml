@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sonar
+spec:
+  selector:
+    app: sonar
+  ports:
+    - port: 80
+      targetPort: 9000
+      name: "http"
+  type: LoadBalancer
