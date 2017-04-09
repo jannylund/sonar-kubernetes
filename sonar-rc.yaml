@@ -15,7 +15,7 @@ spec:
           path: /Users/jan/Development/minikube/sonar/sonarqube
       - name: postgres-volume
         hostPath:
-          path: /tmp/postgres
+          path: /Users/jan/Development/minikube/sonar/postgres
       containers:
       # - name: nginx
       #   image: nginx:alpine
@@ -23,6 +23,7 @@ spec:
       #   - containerPort: 80
       - name: sonarqube
         image: sonarqube:latest
+        # Needed for os x minikube hostpath sharing.
         securityContext:
           privileged: true
         ports:
@@ -45,6 +46,7 @@ spec:
           subPath: lib/bundled-plugins
       - name: postgres
         image: postgres:latest
+        # Needed for os x minikube hostpath sharing.
         securityContext:
           privileged: true
         ports:
