@@ -16,11 +16,21 @@ spec:
       - name: pg-data
         hostPath:
           path: /data/sonar/postgres
+      - name: sonar-nginx-config
+        configMap:
+          name: sonar-nginx-config
+          items:
+          - key: proxy.conf
+            path: proxy.conf
       containers:
-      # - name: nginx
-      #   image: nginx:alpine
-      #   ports:
-      #   - containerPort: 80
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d/default.conf
+          name: sonar-nginx-config
+          subPath: proxy.conf
       - name: sonarqube
         image: sonarqube:6.3
         ports:

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sonar-nginx-config
+data:
+  proxy.conf: |
+    # TBD: Add SSL configuration and forwarding.
+    server {
+        listen               80;
+        client_max_body_size 200M;
+        location / {
+            proxy_pass       http://localhost:9000;
+        }
+    }

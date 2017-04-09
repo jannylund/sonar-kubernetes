@@ -7,8 +7,9 @@ spec:
     app: sonar
   ports:
     - port: 80
-      targetPort: 9000
+      targetPort: 80
       name: "http"
+    # NOTE! Only for development purposes.
     - port: 5432
       targetPort: 5432
       name: "postgres"
