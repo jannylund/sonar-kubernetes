@@ -12,20 +12,17 @@ spec:
       volumes:
       - name: sonar-volume
         hostPath:
-          path: /Users/jan/Development/minikube/sonar/sonarqube
-      - name: postgres-volume
+          path: /data/sonar/sonarqube
+      - name: pg-data
         hostPath:
-          path: /Users/jan/Development/minikube/sonar/postgres
+          path: /data/sonar/postgres
       containers:
       # - name: nginx
       #   image: nginx:alpine
       #   ports:
       #   - containerPort: 80
       - name: sonarqube
-        image: sonarqube:latest
-        # Needed for os x minikube hostpath sharing.
-        securityContext:
-          privileged: true
+        image: sonarqube:6.3
         ports:
         - containerPort: 9000
         env:
@@ -41,14 +38,8 @@ spec:
         - mountPath: /opt/sonarqube/extensions
           name: sonar-volume
           subPath: extensions
-        - mountPath: /opt/sonarqube/lib/bundled-plugins
-          name: sonar-volume
-          subPath: lib/bundled-plugins
       - name: postgres
         image: postgres:latest
-        # Needed for os x minikube hostpath sharing.
-        securityContext:
-          privileged: true
         ports:
         - containerPort: 5432
         env:
@@ -57,5 +48,5 @@ spec:
         - name: POSTGRES_PASSWORD
           value: sonar
         volumeMounts:
-        - mountPath: /var/lib/postgresql
-          name: postgres-volume
+        - mountPath: /var/lib/postgresql/data
+          name: pg-data
