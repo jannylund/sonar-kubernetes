@@ -2,15 +2,19 @@ kind: Service
 apiVersion: v1
 metadata:
   name: sonar
+  labels:
+    app: sonar
 spec:
   selector:
     app: sonar
   ports:
     - port: 80
       targetPort: 80
-      name: "http"
+      name: http
+      protocol: TCP
     # NOTE! Only for development purposes.
     - port: 5432
       targetPort: 5432
-      name: "postgres"
-  type: LoadBalancer
+      name: postgres
+      protocol: TCP
+  type: NodePort
